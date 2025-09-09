@@ -1,41 +1,197 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Jogo do Número Secreto - Adivinhe o número entre 1 e 10!"
+    />
+    <meta
+      name="keywords"
+      content="jogo, número secreto, adivinhar, entretenimento"
+    />
+    <meta name="author" content="Jogo Do Adivinhe" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Inter:wght@400;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <title>JS Game</title>
-</head>
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://code.responsivevoice.org" />
 
-<body>
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-    <div class="container">
-        <div class="container__conteudo">
-            <div class="container__informacoes">
-                <div class="container__texto">
-                    <h1>Adivinhe o <span class="container__texto-azul">numero secreto</span></h1>
-                    <p class="texto__paragrafo">Escolha um número entre 1 a 10</p>
-                </div>
-                <input type="number" min="1" max="10" class="container__input">
-                <div class="chute container__botoes">
-                    <button onclick="verificarChute()" class="container__botao">Chutar</button>
-                    <button onclick="reiniciarJogo()" id="reiniciar" class="container__botao" disabled>Novo jogo</button>
-                </div>
-            </div>
-            <img src="./img/ia.png" alt="Uma pessoa olhando para a esquerda" class="container__imagem-pessoa" />
-        </div>
-    </div>
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css" />
 
-
-
-
+    <!-- Scripts -->
+    <script
+      src="https://code.responsivevoice.org/responsivevoice.js"
+      defer
+    ></script>
     <script src="app.js" defer></script>
-</body>
 
+    <title>Jogo do Número Secreto - Adivinhe o Número!</title>
+  </head>
+
+  <body>
+    <!-- Skip to main content for screen readers -->
+    <a href="#main-content" class="sr-only">Pular para o conteúdo principal</a>
+
+    <!-- Main Game Container -->
+    <main class="container" role="main" id="main-content">
+      <!-- Game Header - Outside Card -->
+      <header class="game-header-outside" role="banner">
+        <h1 class="game-title" id="game-title">
+          Adivinhe o <span class="game-title__highlight">número secreto</span>
+        </h1>
+        <!-- Game Status - Inside Card -->
+        <div class="status-bar-inside" aria-live="polite">
+          <div
+            class="attempt-counter"
+            role="status"
+            aria-label="Contador de tentativas"
+          >
+            <span>Tentativas:</span>
+            <span
+              class="attempt-number"
+              id="attempt-count"
+              aria-label="Número de tentativas"
+              >1</span
+            >
+          </div>
+          <div class="game-status" id="game-status" aria-live="polite">
+            <span class="sr-only">Status do jogo:</span>
+            Pronto para jogar
+          </div>
+        </div>
+      </header>
+
+      <!-- Game Content -->
+      <div class="container__content">
+        <!-- Game Area -->
+        <section class="container__game-area" aria-labelledby="game-title">
+          <div class="game-card">
+            <!-- Game Instructions -->
+            <div class="game-instructions">
+              <h2 class="game-subtitle" id="game-instructions">Como jogar</h2>
+              <p class="game-description" id="game-description">
+                Escolha um número entre 1 e 10 e tente adivinhar o número
+                secreto!
+              </p>
+            </div>
+
+            <!-- Input Section -->
+            <div class="input-section">
+              <div class="input-group">
+                <label for="guess-input" class="input-label">
+                  Seu palpite
+                </label>
+                <input
+                  type="number"
+                  id="guess-input"
+                  class="input-field"
+                  min="1"
+                  max="10"
+                  step="1"
+                  placeholder="Digite um número"
+                  aria-label="Digite seu palpite entre 1 e 10"
+                  aria-describedby="input-hint game-description"
+                  aria-required="true"
+                  autocomplete="off"
+                />
+                <div class="input-hint" id="input-hint">
+                  Digite um número de 1 a 10
+                </div>
+              </div>
+            </div>
+
+            <!-- Feedback Area -->
+            <div
+              class="feedback-area"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              <div class="feedback-message" id="feedback-message">
+                Faça seu primeiro palpite!
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="button-group" role="group" aria-label="Ações do jogo">
+              <button
+                type="button"
+                id="new-game"
+                class="btn btn-primary"
+                onclick="reiniciarJogo()"
+                disabled
+                aria-label="Iniciar novo jogo"
+              >
+                <span>Novo Jogo</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Image Area -->
+        <aside class="container__image-area" aria-label="Ilustração do jogo">
+          <img
+            src="./img/ia.png"
+            alt="Ilustração de uma pessoa pensativa olhando para o lado, representando o desafio de adivinhar o número secreto"
+            class="container__image"
+            loading="lazy"
+            width="400"
+            height="400"
+          />
+        </aside>
+      </div>
+
+      <!-- Game Footer - Outside Card -->
+      <footer class="game-footer-outside" role="contentinfo">
+        <div class="game-info">
+          <p class="game-credits">
+            <small>
+              Desenvolvido com ❤️ |
+              <span class="tech-stack">HTML5, CSS3, JavaScript</span>
+            </small>
+          </p>
+        </div>
+      </footer>
+    </main>
+
+    <!-- Screen Reader Only Styles -->
+    <style>
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .sr-only:focus {
+        position: static;
+        width: auto;
+        height: auto;
+        padding: var(--space-2) var(--space-4);
+        margin: 0;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+        background: var(--primary-500);
+        color: var(--white);
+        text-decoration: none;
+        border-radius: var(--radius-md);
+        z-index: var(--z-tooltip);
+      }
+    </style>
+  </body>
 </html>
